@@ -4,19 +4,23 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
-      flutter: 3.27.3
+      flutter: 3.24.4
       java: 17
     triggering:
       events:
         - push
     scripts:
-      - name: Clear Global Package Cache
+      - name: Clear and Enforce Dependency Versions
         script: |
           flutter pub cache clean --force
           flutter clean
       - name: Set up package dependencies
         script: |
           flutter pub get
+      - name: Downgrade to Compatible Package Versions
+        script: |
+          # This forces share_plus and related modules back to a 3.24 compatible state
+          flutter pub downgrade
       - name: Compile Release APK
         script: |
           flutter build apk --release
