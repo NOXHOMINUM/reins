@@ -10,17 +10,17 @@ workflows:
       events:
         - push
     scripts:
-      - name: Clear and Enforce Dependency Versions
+      - name: Inject Compatibility Overrides
+        script: |
+          # Dynamically inject version locking into pubspec before building
+          echo "dependency_overrides:" >> pubspec.yaml
+          echo "  share_plus: 10.1.3" >> pubspec.yaml
+          echo "  share_plus_platform_interface: 5.0.2" >> pubspec.yaml
+      - name: Clear Cache and Rebuild Dependencies
         script: |
           flutter pub cache clean --force
           flutter clean
-      - name: Set up package dependencies
-        script: |
           flutter pub get
-      - name: Downgrade to Compatible Package Versions
-        script: |
-          # This forces share_plus and related modules back to a 3.24 compatible state
-          flutter pub downgrade
       - name: Compile Release APK
         script: |
           flutter build apk --release
