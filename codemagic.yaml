@@ -10,8 +10,9 @@ workflows:
       events:
         - push
     scripts:
-      - name: Clear Old Cache
+      - name: Clear Global Package Cache
         script: |
+          flutter pub cache clean --force
           flutter clean
       - name: Set up package dependencies
         script: |
