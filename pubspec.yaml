@@ -168,5 +168,7 @@ flutter_native_splash:
   web: false
 
 dependency_overrides:
-  share_plus: 11.0.0
+  share_plus: 10.1.2
+  share_plus_platform_interface: 5.0.2
+
 
